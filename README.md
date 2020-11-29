@@ -1,12 +1,17 @@
 # Wine Quality Prediction Using Pyspark and Amazon Web Services (AWS)
 This giude explains the procedure to use AWS services to train ML (Machine Learning) model on multiple parallel EC2(Elastic Compute Cloud) instances. The ML program is written in python using Apache Spark MLlib libraries. The training and prediction programs are configured to run inside a container. 
+
 The Python programs used in this project can be found in *python_code* folder
+
+
 The Dockerfile for containers can be found in *test_docker* and *train_docker* folders
+
 The Datasets used can be found in *dataset* folder
+
 The links for the Docker Container uploaded on Docker hub can be found in [Links](#links)
  
 # Links
-- Github link - https://github.com/Kruthika928/wine-quality-prediction-pa2 
+- **Github link** - https://github.com/Kruthika928/wine-quality-prediction-pa2 
  
 - **Docker container for training** : [kruthika547nayak/winetrain:latest](https://hub.docker.com/repository/docker/kruthika547nayak/winetrain)
 
