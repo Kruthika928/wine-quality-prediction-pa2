@@ -3,7 +3,7 @@ This giude explains the procedure to use AWS services to train ML (Machine Learn
 The links for the Docker Container and ML program is found in the section ????
  
 # Links
-- Github link - <  >
+- Github link - https://github.com/Kruthika928/wine-quality-prediction-pa2 
  
 - **Docker container for training** : [kruthika547nayak/winetrain:latest](https://hub.docker.com/repository/docker/kruthika547nayak/winetrain)
 
@@ -25,17 +25,15 @@ To run the ML container application for training on multiple parallel EC2 instan
 - Click on *"Create"*  to create a cluster 
 
 
- <img src="https://github.com/Kruthika928/test/blob/main/aws-cluster1.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/aws-cluster1.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/aws-cluster2.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/aws-cluster2.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/aws-cluster4.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/aws-cluster4.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/aws-cluster3.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/aws-cluster3.JPG?raw=true" width="666">
  
  
-
-
 Once the cluster is created 4 EC2 instances registered to the cluster are generated. This can be verified on EC2 dashboard and checking the number of EC2 instances running.
 
 ## Setting up Task Definitions and Tasks
@@ -65,15 +63,15 @@ Under __*Mount points*__ ,
 - __*Container path*__ : */job*
 - Click on *"Add"* and then click on *"Create"*
 
- <img src="https://github.com/Kruthika928/test/blob/main/task-definition-1.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/task-definition-1.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/task-definition-2.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/task-definition-2.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/task-definition-3.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/task-definition-3.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/task-definition-4.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/task-definition-4.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/task-definition-5.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/task-definition-5.JPG?raw=true" width="666">
  
 We have successfully created our *"Task Definition"* , now we have create a Task which will initiate our docker container application on the EC2 instances. Do the following to run the task:
 - On ECS console click on **Cluster**
@@ -132,17 +130,17 @@ In order to transfer data between the instance and the local PC (i.e Modelfile, 
 
 The following shows the step by step approach to configure and upload Modelfile to the instance. The same can also be used to download data from the instance.
 
- <img src="https://github.com/Kruthika928/test/blob/main/winSCP-login.JPG?raw=true" width="450">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/winSCP-login.JPG?raw=true" width="450">
  
- <img src="https://github.com/Kruthika928/test/blob/main/winSCP-login1.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/winSCP-login1.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/winSCP-login2.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/winSCP-login2.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/winSCP-login3.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/winSCP-login3.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/winSCP-login4.JPG?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/winSCP-login4.JPG?raw=true" width="666">
  
- <img src="https://github.com/Kruthika928/test/blob/main/winSCP-login5.JPG?raw=true" width="500">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/winSCP-login5.JPG?raw=true" width="500">
  
  The above image is expected if all the configurations are done properly
  
