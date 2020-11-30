@@ -16,6 +16,13 @@ The links for the Docker Container uploaded on Docker hub can be found in [Links
 - **Docker container for training** : [kruthika547nayak/winetrain:latest](https://hub.docker.com/repository/docker/kruthika547nayak/winetrain)
 
 - **Docker container for testing** : [kruthika547nayak/winetest:latest](https://hub.docker.com/repository/docker/kruthika547nayak/winetest)
+
+# Table of Contents
+1) [Setting up EC2 Cluster on AWS](#setting-up-ec2-cluster-on-aws)
+2) [Setting up Task Definitions and Tasks](#setting-up-task-definitions-and-tasks)
+3) [Running the Prediction Application on AWS with Docker](#running-the-prediction-application-on-aws-with-docker)
+4) [Using WinSCP to transfer data](#using-winscp-to-transfer-data)
+
 ## Setting up EC2 Cluster on AWS
 
 To run the ML container application for training on multiple parallel EC2 instances, a cluster needs to be set up. The steps given below are followed to create a cluster with 4 instances.
@@ -24,11 +31,17 @@ To run the ML container application for training on multiple parallel EC2 instan
 
 - In  **Select cluster template** click on *"EC2 Linux + Networking"* , because we will be using Amazon Linux 2 image for managing ECS tasks.
 - In **Configure cluster** modify the following parameters and keep the rest as it is.
+
     __*Cluster name*__ : *wine-quality-train-cluster*
+    
     __*Provisioning model*__ : *On-Demand Instance*
+    
     __*EC2 instance type*__ : *t2.micro*
+    
     __*Number of instances*__ : *4*
+    
     __*Key Pair*__ : *Choose an appropriate key pair*
+    
     __*Security group inbound rules (Port range)*__ : *22-80* 
 - Click on *"Create"*  to create a cluster 
 
@@ -91,7 +104,7 @@ We have successfully created our *"Task Definition"* , now we have create a Task
 This will download ML conatiner application for training on EC2 instances if not present and starts executing it.
 Once the execution is completed two files named *"Modelfile"* and *"results.txt"* should be present in the home directory (/home/ec2-user) of all the running EC2 instances. This *"Modelfile"* can be downloaded from any one these instances which will be used in the prediction application. Instructions to download using WinSCP is given at ?????
 
-## Running the Prediction Application on AWS
+## Running the Prediction Application on AWS with Docker
 The ML container for prediction uses 2 files as input  *"Modelfile"*, *"TestDataset.csv"* .
 The container application takes the *"TestDataset.csv"* as input and applies the model from *"Modelfile"* and generates a csv file with prediction output. The detailed steps are explained below.
 
