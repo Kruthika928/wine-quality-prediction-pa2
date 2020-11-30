@@ -53,11 +53,16 @@ Pipe = Pipeline(stages=[vect_assembler, Scaler, logr])
 PipeModel = Pipe.fit(data_train_new)
 
 # Saving the Pipeline model results 
-PipeModel.write().overwrite().save("/job/LogisticRegression")
+PipeModel.write().overwrite().save("/job/Modelfile")
 
 # PGenerating predictions for Train and Validation datasets
-train_prediction = PipeModel.transform(data_train)
-test_prediction = PipeModel.transform(data_test)
+try: 
+	train_prediction = PipeModel.transform(data_train)
+	test_prediction = PipeModel.transform(data_test)
+except:
+	print("***********************************************************************")
+	print ("Please check CSV file :")
+	print("***********************************************************************")	
 
 # Creating a evaluator classification object to genertae metrics for predictions
 evaluator = MulticlassClassificationEvaluator(labelCol="quality", predictionCol = "prediction")
@@ -80,7 +85,7 @@ print("[Train] F1 score = ", train_F1score)
 print("[Train] Accuracy = ", train_accuracy)
 print("***********************************************************************")
 print("[Test] F1 score = ", test_F1score)
-print("[Test] F1 score = ", test_accuracy)
+print("[Test] Accuracy = ", test_accuracy)
 print("***********************************************************************")
 
 # Save the results onto a Text File called results.txt
@@ -90,7 +95,7 @@ fp.write("[Train] F1 score =  %s\n" %train_F1score)
 fp.write("[Train] Accuracy = %s\n" %train_accuracy)
 fp.write("***********************************************************************\n")
 fp.write("[Test] F1 score =  %s\n" %test_F1score)
-fp.write("[Test] F1 score =  %s\n" %test_accuracy)
+fp.write("[Test] Accuracy =  %s\n" %test_accuracy)
 fp.write("***********************************************************************\n")
 
 # Closing the file
