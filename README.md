@@ -151,6 +151,68 @@ To run the prediction application without docker, the following packages are nee
 - [numpy](https://pypi.org/project/numpy/)
 - [Apache Spark(spark-3.0.1-bin-hadoop2.7.tgz)](https://spark.apache.org/downloads.html)
 
+### Java Installation
+-Download Java jdk from here [open-jdk-8](https://www.oracle.com/java/technologies/javase-jdk13-downloads.html)
+- Go to downloads folder and run the following command on console
+```Console
+$ sudo dpkg -i jdk-13.0.2_linux-x64_bin.deb
+```
+Run `java --version` on console to verify if java is installed. You should be getting something like this ???
+
+To setup environment variables for java, include the following in  `/etc/environemnt` file as shown below using any text editor (i.e nano, gedit)
+```Console
+$ JAVA_HOME=/usr/lib/jvm/jdk-13.0.2
+```
+Finally source the `/etc/environment` file to set the variables,
+```Console
+$ source /etc/environment
+```
+
+### Installing Apache Spark
+- Go to Spark [Website](https://spark.apache.org/downloads.html)
+- Select Spark Release Version as 3.0.1 and download the .tgz file
+
+image
+
+- Go to the downloads folder and extract the tgz file using the following command
+```
+$  sudo tar -xvzf spark-3.0.1-hadoop2.7.tgz 
+```
+To setup environment variables for pyspark, include the following `~/.bashrc` file
+``Console
+export SPARK_HOME=~/Downloads/spark-3.0.1-bin-hadoop2.7
+Export PATH=$PATH:$SPARK_HOME/bin
+Export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
+Export PYSPARK_PYTHON=python3
+Export PATH=$PATH:$JAVA_HOME/jre/bin
+```
+
+-  Finally source the `~./bashrc<backtick` file as follows
+Either source `./bashrc` file or restart console for the variables to get updated
+
+```Console
+ $ source ~./bashrc
+ ```
+Run pyspark to verify if all is well. You should get the following output if all is well when you run `pyspark` in console.
+Run the prediction app using this command
+```Console
+$ python3 predict.py TestDataset.csv
+```
+After the command is executed successfully, two files will be generated in the directory,
+Results.txt and Resultdata folder containing csv file.
+
+
+### Running prediction application
+- Make sure Modelfile is present before running the prediction.py file. In case it is not present run the training.py file to generate the same. This can be done by executing the following command
+```Console
+python3 training.py
+```
+- Run the prediction app
+
+
+
+
+
 
 ## Using WinSCP to transfer data
 In order to transfer data between the instance and the local PC (i.e Modelfile, results.txt, InputDataset.csv) we make use of program called [WinSCP](https://winscp.net/eng/download.php). The following are pre-requisites for using WinSCP
