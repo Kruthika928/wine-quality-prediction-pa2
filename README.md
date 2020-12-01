@@ -144,6 +144,14 @@ where ,
 
 *Note: For the above command to work the Modelfile and TestDataset.csv must be present at /home/ec2-user*
 
+##  Running the Prediction Application without Docker
+To run the prediction application without docker, the following packages are needed
+- [Pyspark](https://pypi.org/project/pyspark/)
+- [open-jdk-8](https://openjdk.java.net/install/)
+- [numpy](https://pypi.org/project/numpy/)
+- [Apache Spark(spark-3.0.1-bin-hadoop2.7.tgz)](https://spark.apache.org/downloads.html)
+
+
 ## Using WinSCP to transfer data
 In order to transfer data between the instance and the local PC (i.e Modelfile, results.txt, InputDataset.csv) we make use of program called [WinSCP](https://winscp.net/eng/download.php). The following are pre-requisites for using WinSCP
 1. ppk key registered to the instance
