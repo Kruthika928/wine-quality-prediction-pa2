@@ -161,7 +161,7 @@ $ sudo dpkg -i jdk-13.0.2_linux-x64_bin.deb
 ```
 - Run `java --version` on console to verify if java is installed. The following output is expected:
 
- <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/java-version.jpg?raw=true" width="666">
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/java-version.JPG?raw=true" width="666">
 
 - To setup environment variables for java, include the following in  `/etc/environemnt` file as shown below using any text editor (i.e nano, gedit)
 ```Console
