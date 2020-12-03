@@ -157,7 +157,7 @@ To run the prediction application without docker, the following packages are nee
 - Download Java JDK from here [link](https://www.oracle.com/java/technologies/javase-jdk13-downloads.html)
 - Go to downloads folder and run the following command on console
 ```Console
-$ sudo dpkg -i jdk-13.0.2_linux-x64_bin.deb
+ $ sudo dpkg -i jdk-13.0.2_linux-x64_bin.deb
 ```
 - Run `java --version` on console to verify if java is installed. The following output is expected:
 
@@ -181,7 +181,7 @@ $ sudo dpkg -i jdk-13.0.2_linux-x64_bin.deb
  
 - Go to the downloads folder and extract the tgz file using the following command
 ```Console
-  $sudo tar -xvzf spark-3.0.1-hadoop2.7.tgz 
+ $ sudo tar -xvzf spark-3.0.1-hadoop2.7.tgz 
 ```
 
 - To setup environment variables for pyspark, include the following `~/.bashrc` file
@@ -199,7 +199,7 @@ Image for reference:
 - Finally source `./bashrc` file or restart `console` for the variables to get updated
 
 ```Console
-  $source ~./bashrc
+ $ source ~./bashrc
  ```
 - Run `pyspark` in console to verify the installation. You should get the following output. 
 
