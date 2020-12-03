@@ -21,7 +21,9 @@ The links for the Docker Container uploaded on Docker hub can be found in [Links
 1) [Setting up EC2 Cluster on AWS](#setting-up-ec2-cluster-on-aws)
 2) [Setting up Task Definitions and Tasks](#setting-up-task-definitions-and-tasks)
 3) [Running the Prediction Application on AWS with Docker](#running-the-prediction-application-on-aws-with-docker)
-4) [Using WinSCP to transfer data](#using-winscp-to-transfer-data)
+4) [Running the Prediction Application without Docker](#running-the-prediction-application-without-docker)
+5) [Using WinSCP to transfer data](#using-winscp-to-transfer-data)
+
 
 ## Setting up EC2 Cluster on AWS
 
@@ -139,78 +141,80 @@ After installing the image, two files must be present in order to run the contai
 where ,
 `/home/ec2-user` is the path to the home directory in the instance.
 `/job` is the path mapped inside the conatiner
-`kruthika547nayak/winetest:latest is the name of prediction docker conatiner
+`kruthika547nayak/winetest:latest` is the name of prediction docker conatiner
 `TestDataset.csv` is the name of the input file for prediction testing.
 
 *Note: For the above command to work the Modelfile and TestDataset.csv must be present at /home/ec2-user*
 
-##  Running the Prediction Application without Docker
+## Running the Prediction Application without Docker
 To run the prediction application without docker, the following packages are needed
 - [Pyspark](https://pypi.org/project/pyspark/)
-- [open-jdk-8](https://openjdk.java.net/install/)
+- [JAVA JDK](https://www.oracle.com/java/technologies/javase-jdk13-downloads.html)
 - [numpy](https://pypi.org/project/numpy/)
 - [Apache Spark(spark-3.0.1-bin-hadoop2.7.tgz)](https://spark.apache.org/downloads.html)
 
 ### Java Installation
--Download Java jdk from here [open-jdk-8](https://www.oracle.com/java/technologies/javase-jdk13-downloads.html)
+- Download Java JDK from here [link](https://www.oracle.com/java/technologies/javase-jdk13-downloads.html)
 - Go to downloads folder and run the following command on console
 ```Console
 $ sudo dpkg -i jdk-13.0.2_linux-x64_bin.deb
 ```
-Run `java --version` on console to verify if java is installed. You should be getting something like this ???
+- Run `java --version` on console to verify if java is installed. The following output is expected:
 
-To setup environment variables for java, include the following in  `/etc/environemnt` file as shown below using any text editor (i.e nano, gedit)
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/java-version.jpg?raw=true" width="666">
+
+- To setup environment variables for java, include the following in  `/etc/environemnt` file as shown below using any text editor (i.e nano, gedit)
 ```Console
  $ JAVA_HOME=/usr/lib/jvm/jdk-13.0.2
 ```
-Finally source the `/etc/environment` file to set the variables,
+- Finally source the `/etc/environment` file, 
 
 ```Console
- $source /etc/environment
+ $ source /etc/environment
 ```
 
 ### Installing Apache Spark
-- Go to Spark [Website](https://spark.apache.org/downloads.html)
+- Go to [Spark Website](https://spark.apache.org/downloads.html)
 - Select Spark Release Version as 3.0.1 and download the .tgz file
 
-image
-
+ <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/spark-tar.jpg?raw=true" width="666">
+ 
 - Go to the downloads folder and extract the tgz file using the following command
-```
- $sudo tar -xvzf spark-3.0.1-hadoop2.7.tgz 
+```Console
+  $sudo tar -xvzf spark-3.0.1-hadoop2.7.tgz 
 ```
 
 - To setup environment variables for pyspark, include the following `~/.bashrc` file
-``Console
- Export SPARK_HOME=~/Downloads/spark-3.0.1-bin-hadoop2.7
- Export PATH=$PATH:$SPARK_HOME/bin
- Export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
- Export PYSPARK_PYTHON=python3
- Export PATH=$PATH:$JAVA_HOME/jre/bin
+```Console
+ export SPARK_HOME=~/Downloads/spark-3.0.1-bin-hadoop2.7
+ export PATH=$PATH:$SPARK_HOME/bin
+ export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
+ export PYSPARK_PYTHON=python3
+ export PATH=$PATH:$JAVA_HOME/jre/bin
 ```
+Image for reference:
+<img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/bashrc.jpg?raw=true" width="666">
 
--  Finally source the `~./bashrc<backtick` file as follows
-Either source `./bashrc` file or restart console for the variables to get updated
+- Finally source `./bashrc` file or restart `console` for the variables to get updated
 
 ```Console
   $source ~./bashrc
  ```
-Run pyspark to verify if all is well. You should get the following output if all is well when you run `pyspark` in console.
+- Run `pyspark` in console to verify the installation. You should get the following output. 
 
 <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/spark-console.jpg?raw=true" width="666">
 
 
 ### Running prediction application
-- Make sure Modelfile is present before running the prediction.py file. In case it is not present run the training.py file to generate the same. This can be done by executing the following command
+- Make sure Modelfile is present before running the *wine_test_nodocker.py* file. In case it is not present run the *wine_train_nodocker.py* file to generate the same. This can be done by executing the following command
 ```Console
-python3 training.py
+python3 wine_train_nodocker.py
 ```
 - Run the prediction app using this command
 ```Console
- $python3 predict.py TestDataset.csv
+ $python3 wine_test_nodocker.py TestDataset.csv
 ```
-After the command is executed successfully, two files will be generated in the directory,
-Results.txt and Resultdata folder containing csv file.
+After the command is executed successfully, two files will be generated in the directory, `Results.txt` and `Resultdata` folder containing csv file.
 
 
 ## Using WinSCP to transfer data
