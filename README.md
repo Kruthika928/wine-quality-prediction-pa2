@@ -193,6 +193,7 @@ $ sudo dpkg -i jdk-13.0.2_linux-x64_bin.deb
  export PATH=$PATH:$JAVA_HOME/jre/bin
 ```
 Image for reference:
+
 <img src="https://github.com/Kruthika928/wine-quality-prediction-pa2/blob/main/images/bashrc.jpg?raw=true" width="666">
 
 - Finally source `./bashrc` file or restart `console` for the variables to get updated
@@ -208,11 +209,11 @@ Image for reference:
 ### Running prediction application
 - Make sure Modelfile is present before running the *wine_test_nodocker.py* file. In case it is not present run the *wine_train_nodocker.py* file to generate the same. This can be done by executing the following command
 ```Console
-python3 wine_train_nodocker.py
+ $ python3 wine_train_nodocker.py
 ```
 - Run the prediction app using this command
 ```Console
- $python3 wine_test_nodocker.py TestDataset.csv
+ $ python3 wine_test_nodocker.py TestDataset.csv
 ```
 After the command is executed successfully, two files will be generated in the directory, `Results.txt` and `Resultdata` folder containing csv file.
 
