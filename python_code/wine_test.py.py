@@ -3,6 +3,8 @@ import sys
 from pyspark.sql import SparkSession
 from pyspark.ml import PipelineModel
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+from pyspark.rdd import reduce
+
 
 # Creating a Spark Session 
 spark = SparkSession.builder.master("local[*]").getOrCreate()
@@ -28,6 +30,19 @@ except:
 	print("***********************************************************************")
 	exit()
 
+#To clean out CSV headers if quotes are present
+old_column_name = data_test.schema.names
+print(data_test.schema)
+clean_column_name = []
+
+for name in old_column_name:
+    clean_column_name.append(name.replace('"',''))
+
+data_test = reduce(lambda data_test, idx: data_test.withColumnRenamed(old_column_name[idx], clean_column_name[idx]), range(len(clean_column_name)), data_test)
+print(data_test.schema)
+
+
+
 
 # Create a PipelineModel object to load saved model parameters from Train
 
@@ -51,13 +66,14 @@ try:
 except:
 	print("***********************************************************************")
 	print ("Please check CSV file : labels may be improper")
-	print("***********************************************************************")	
+	print("***********************************************************************")
+	
 
 #test_prediction.printSchema()
 
 # Save the resulting predictions with original datset to a CSV File
-#test_prediction.drop("feature", "Scaled_feature", "rawPrediction", "probability").write.mode("overwrite").option("header", "true").csv("/job/resultdata.csv")
-test_prediction.select("quality", "prediction").write.mode("overwrite").option("header", "true").csv("/job/resultdata")
+test_prediction.drop("feature", "Scaled_feature", "rawPrediction", "probability").write.mode("overwrite").option("header", "true").csv("/job/resultdata.csv")
+#test_prediction.select("quality", "prediction").write.mode("overwrite").option("header", "true").csv("/job/resultdata")
 
 # Creating a evaluator classification object to generate metrics for predictions
 evaluator = MulticlassClassificationEvaluator(labelCol="quality", predictionCol = "prediction")

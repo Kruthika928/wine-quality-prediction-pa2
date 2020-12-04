@@ -7,6 +7,7 @@ from pyspark.ml.feature import StandardScaler
 from pyspark.ml import Pipeline
 from pyspark.ml.classification import LogisticRegression
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+from pyspark.rdd import reduce
 
 
 
@@ -29,6 +30,18 @@ else:
 
 # Reading the training dataset locally stored in the container
 data_train = spark.read.option("delimiter", ";").csv('TrainingDataset.csv', header=True, inferSchema=True)
+
+#To clean out CSV headers if quotes are present
+old_column_name = data_train.schema.names
+print(data_train.schema)
+clean_column_name = []
+
+for name in old_column_name:
+    clean_column_name.append(name.replace('"',''))
+
+data_train = reduce(lambda data_train, idx: data_train.withColumnRenamed(old_column_name[idx], clean_column_name[idx]), range(len(clean_column_name)), data_train)
+data_test = reduce(lambda data_test, idx: data_test.withColumnRenamed(old_column_name[idx], clean_column_name[idx]), range(len(clean_column_name)), data_test)
+print(data_train.schema)
 
 # Dropping rows with quality equal to 3 because it contains very little data
 data_train_new = data_train.filter(data_train['quality'] != "3")

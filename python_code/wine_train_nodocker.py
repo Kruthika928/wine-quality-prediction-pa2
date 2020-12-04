@@ -7,6 +7,7 @@ from pyspark.ml.feature import StandardScaler
 from pyspark.ml import Pipeline
 from pyspark.ml.classification import LogisticRegression
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+from pyspark.rdd import reduce
 
 
 
@@ -21,19 +22,32 @@ try:
         if len(sys.argv) == 2:
                 filepn = str(sys.argv[1])
                 data_test = spark.read.option("delimiter", ";").csv(filepn, header=True, inferSchema=True)
-                print("***********************************************************************")
-                print ("Argument passed is :", str(sys.argv[1]))
-                print("***********************************************************************")
+                print("\n ***********************************************************************")
+                print(" Argument passed is :", str(sys.argv[1]))
+                print(" ***********************************************************************")
         else:
                 data_test = spark.read.option("delimiter", ";").csv('ValidationDataset.csv', header=True, inferSchema=True)
 except:
-         print("***********************************************************************")
-         print ("Make sure TrainDataset.csv and ValidationDataset.csv are present in the same folder as the pythonfile")
-         print("***********************************************************************")
+         print("\n ***********************************************************************")
+         print(" Make sure TrainDataset.csv and ValidationDataset.csv are present in the same folder as the pythonfile")
+         print(" ***********************************************************************")
          exit(0)
 
 # Reading the training dataset locally stored in the container
 data_train = spark.read.option("delimiter", ";").csv('TrainingDataset.csv', header=True, inferSchema=True)
+
+
+#To clean out CSV headers if quotes are present
+old_column_name = data_train.schema.names
+print(data_train.schema)
+clean_column_name = []
+
+for name in old_column_name:
+    clean_column_name.append(name.replace('"',''))
+
+data_train = reduce(lambda data_train, idx: data_train.withColumnRenamed(old_column_name[idx], clean_column_name[idx]), range(len(clean_column_name)), data_train)
+data_test = reduce(lambda data_test, idx: data_test.withColumnRenamed(old_column_name[idx], clean_column_name[idx]), range(len(clean_column_name)), data_test)
+print(data_train.schema)
 
 # Dropping rows with quality equal to 3 because it contains very little data
 data_train_new = data_train.filter(data_train['quality'] != "3")
@@ -65,9 +79,10 @@ try:
 	train_prediction = PipeModel.transform(data_train)
 	test_prediction = PipeModel.transform(data_test)
 except:
-	print("***********************************************************************")
-	print ("Please check CSV file :")
-	print("***********************************************************************")	
+	print("\n ***********************************************************************")
+	print(" Please check CSV file(Training & Validation). Labels may be improper ")
+	print(" ***********************************************************************"); exit(0)
+
 
 # Creating a evaluator classification object to genertae metrics for predictions
 evaluator = MulticlassClassificationEvaluator(labelCol="quality", predictionCol = "prediction")
@@ -83,14 +98,14 @@ test_accuracy = evaluator.evaluate(test_prediction, {evaluator.metricName: "accu
 
 
 # Priting the metrics for the user to see
-print("***********************************************************************")
-print("++++++++++++++++++++++++++++++ Metrics ++++++++++++++++++++++++++++++++")
-print("***********************************************************************")
-print("[Train] F1 score = ", train_F1score)
-print("[Train] Accuracy = ", train_accuracy)
-print("***********************************************************************")
-print("[Test] F1 score = ", test_F1score)
-print("[Test] Accuracy = ", test_accuracy)
+print("\n ***********************************************************************")
+print(" ++++++++++++++++++++++++++++++ Metrics ++++++++++++++++++++++++++++++++")
+print(" ***********************************************************************")
+print(" [Train] F1 score = ", train_F1score)
+print(" [Train] Accuracy = ", train_accuracy)
+print(" ***********************************************************************")
+print(" [Validation] F1 score = ", test_F1score)
+print(" [Validation] Accuracy = ", test_accuracy)
 print("***********************************************************************")
 
 # Save the results onto a Text File called results.txt
