@@ -104,7 +104,7 @@ We have successfully created our *"Task Definition"* , now we have create a Task
 - Click on *"Run Task"*
 
 This will download ML conatiner application for training on EC2 instances if not present and starts executing it.
-Once the execution is completed two files named *"Modelfile"* and *"results.txt"* should be present in the home directory (/home/ec2-user) of all the running EC2 instances. This *"Modelfile"* can be downloaded from any one these instances which will be used in the prediction application. Instructions to download using WinSCP is given at ?????
+Once the execution is completed two files named *"Modelfile"* and *"results.txt"* should be present in the home directory (/home/ec2-user) of all the running EC2 instances. This *"Modelfile"* can be downloaded from any one these instances which will be used in the prediction application. Instructions to download using WinSCP is given at [Using WinSCP to transfer data](#using-winscp-to-transfer-data)
 
 ## Running the Prediction Application on AWS with Docker
 The ML container for prediction uses 2 files as input  *"Modelfile"*, *"TestDataset.csv"* .
